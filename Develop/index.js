@@ -35,18 +35,23 @@ inquirer.prompt([
     },
     {
         type: 'input',
-        message: 'What is the command to run tests?',
-        name: 'tests',
-    },
-    {
-        type: 'input',
         message: 'What does the user need to know about using the repo?',
         name: 'usage',
     },
     {
         type: 'input',
+        message: 'Please enter any instruction on how to use your repo.',
+        name: 'instructions',
+    },
+    {
+        type: 'input',
         message: 'What does the user needs to know about contributing to the repo?',
         name: 'contribution',
+    },
+    {
+        type: 'input',
+        message: 'Please include any credits',
+        name: 'credit',
     }
 ]).then(({
     title,
