@@ -1,14 +1,107 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
+const fs = require('fs');
 
 // TODO: Create an array of questions for user input
-const questions = ['What is your Github username?', 'What is your email address?', 'What is the name of your project?', 'Please write a short description of your project.', 'What kind of license should your project have?', 'What command should be run to install dependencies?', 'What command should be run to run tests?', 'What does the user need to know about using the repo?', 'What does the user needs to know about contributing to the repo?'];
+inquirer
+    .prompt([
+        {
+            type: 'input',
+            message: 'What is your Github username?',
+            name: 'username',
+        },
+        {
+            type: 'input',
+            message: 'What is your email address?',
+            name: 'email',
+        },
+        {
+            type: 'input',
+            message: 'What is the name of your project?',
+            name: 'title',
+        },
+        {
+            type: 'input',
+            message: 'Please write a short description of your project.',
+            name: 'description',
+        },
+        {
+            type: 'list',
+            message: 'What kind of license should your project have?',
+            name: 'license',
+            choices: ['MIT', 'Apache', 'GPL', 'Other', 'N/A'],
+        },
+        {
+            type: 'input',
+            message: 'What command should be run to install dependencies?',
+            name: 'installation',
+        },
+        {
+            type: 'input',
+            message: 'What is the command to run tests?',
+            name: 'tests',
+        },
+        {
+            type: 'input',
+            message: 'What does the user need to know about using the repo?',
+            name: 'usage',
+        },
+        {
+            type: 'input',
+            message: 'What does the user needs to know about contributing to the repo?',
+            name: 'contribution',
+        }
+    ])
+    .then(({
+        title,
+        description,
+        installation,
+        instructions,
+        credit,
+        license,
+        username,
+        email,
+        usage,
+        contribution
+    })=>{ const template = 
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+`# ${title}
 
-// TODO: Create a function to initialize app
-function init() {}
+## Description 
+${description}
 
-// Function call to initialize app
-init();
+## Usage 
+${usage}
+
+## Installation commands
+${installation}
+
+## Contribution 
+${contribution}
+
+## instructions 
+${instructions}
+
+## Credits 
+${credit}
+
+## License 
+${license}
+
+# Contact
+* GitHub: 
+${username}
+* Email: 
+${email}`;
+        
+        createNewFile(title,template);
+    });
+
+function createNewFile(fileName, data){
+    fs.writeFile(`./${fileName}.md`, data, (err)=> {
+        if (err) {
+            console.log(err)
+        }
+        console.log('Your README file was generated!');
+    })
+}
